@@ -45,7 +45,7 @@ this is assuming you have coresponding files next to the component. You may over
 
 
 ## Credits
-Sean Larkin from the @webpack team [TheLarkInn/angular2-template-loader](https://github.com/TheLarkInn/angular2-template-loader)
+[Sean Larkin](https://github.com/TheLarkInn) from the Webpack team [TheLarkInn/angular2-template-loader](https://github.com/TheLarkInn/angular2-template-loader)
 
 ___
 
