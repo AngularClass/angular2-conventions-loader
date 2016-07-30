@@ -14,7 +14,10 @@
     "webpack",
     "angularjs",
     "loader",
-    "angular2-loader"
+    "angular2-loader",
+    "angular2-conventions-loader",
+    "AngularClass",
+    "AngularClassModules"
   ],
   "author": "Sean Larkin",
   "license": "MIT",
