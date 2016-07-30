@@ -22,7 +22,7 @@ Allow default for `@Component` metadata for Angular 2
 Given this simple Component example
 `app.js`
 
-```tyypescript
+```typescript
 @Component({})
 export class App {
 }
@@ -30,7 +30,7 @@ export class App {
 Webpack will change the code
 `app.js`
 
-```tyypescript
+```typescript
 @Component({
   selector: "app",
   styles: [require("./app.css")],
@@ -39,7 +39,7 @@ Webpack will change the code
 export class App {
 }
 ```
-this is assuming you have coresponding files next to the component. You may overwrite the selector at anytime by providing one. If the selector and the component file name does not match then the coresponding css/template file with the selector will be injected
+this is assuming you have coresponding files next to the component. You may overwrite the selector at anytime by providing one. If the selector and the component file name does not match then the coresponding css/template file with the selector will be injected.
 
 
 ___
