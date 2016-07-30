@@ -1,6 +1,6 @@
 {
   "name": "@angularclass/conventions-loader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Allow default for @Component metadata for Angular 2",
   "main": "index.js",
   "scripts": {
@@ -19,8 +19,8 @@
     "AngularClass",
     "AngularClassModules"
   ],
-  "author": "Sean Larkin",
-  "license": "MIT",
+  "author": "PatrickJS <patrick@angularclass.com>",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/angularclass/angular2-conventions-loader/issues"
   },
