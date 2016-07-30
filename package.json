@@ -1,0 +1,30 @@
+{
+  "name": "@angularclass/conventions-loader",
+  "version": "1.0.0",
+  "description": "Allow default for @Component metadata for Angular 2",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angularclass/angular2-conventions-loader.git"
+  },
+  "keywords": [
+    "angular2",
+    "webpack",
+    "angularjs",
+    "loader",
+    "angular2-loader"
+  ],
+  "author": "Sean Larkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/angularclass/angular2-conventions-loader/issues"
+  },
+  "homepage": "https://github.com/angularclass/angular2-conventions-loader#readme",
+  "devDependencies": {
+  },
+  "dependencies": {
+    "loader-utils": "^0.2.15"
+  }
+}
