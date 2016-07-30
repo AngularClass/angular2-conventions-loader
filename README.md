@@ -6,7 +6,7 @@
 
 ___
 
-# angular2-conventions-loader
+# Angular 2 Conventions Loader
 Allow default for `@Component` metadata for Angular 2
 
 ```js
@@ -18,6 +18,29 @@ Allow default for `@Component` metadata for Angular 2
   ]
 },
 ```
+
+Given this simple Component example
+`app.js`
+
+```tyypescript
+@Component({})
+export class App {
+}
+```
+Webpack will change the code
+`app.js`
+
+```tyypescript
+@Component({
+  selector: "app",
+  styles: [require("./app.css")],
+  template: require("./app.html")
+})
+export class App {
+}
+```
+this is assuming you have coresponding files next to the component. You may overwrite the selector at anytime by providing one. If the selector and the component file name does not match then the coresponding css/template file with the selector will be injected
+
 
 ___
 
