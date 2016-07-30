@@ -7,7 +7,7 @@
 ___
 
 # Angular 2 Conventions Loader
-Allow default for `@Component` metadata for Angular 2
+Allow defaults for `@Component` metadata for Angular 2
 
 `npm install @angularclass/conventions-loader --save-dev`
 
