@@ -36,7 +36,7 @@ var path = require('path');
 
 
 // using: regex, capture groups, and capture group variables.
-const componentRegex = /@(Component)\({([\s\S]*?)}\)$/gm;
+const componentRegex = /@(Component|Directive)\({([\s\S]*?)}\)$/gm;
 const checkComponentRegex = /(@Component\({[\s\S]*?}\))$/gm;
 // TODO(gdi2290): become a regexp master to fix this
 const componentClassRegex = /@(Component)\({([\s\S]*?)}\)\s*export\s*class\s*([\s\S]+)\s*(extends|implements|{)$/gm;
@@ -101,7 +101,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
     if (!/selector\s*:\s*('|")(.*)('|"),?/.test(metadata)) {
 
       // TODO(gdi2290): become a regexp master to fix this
-      var __args = /@(Component)\({([\s\S]*?)}\)\s*export\s*class\s*([\s\S]+)\s*(extends|implements|{)$/m.exec(src.slice(offset));
+      var __args = /@(Component|Directive)\({([\s\S]*?)}\)\s*export\s*class\s*([\s\S]+)\s*(extends|implements|{)$/m.exec(src.slice(offset));
       if (__args && __args[3]) {
         var __className = __args[3].split(' ')[0];
         __selector = dashCase(__className);
