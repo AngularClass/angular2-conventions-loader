@@ -41,7 +41,7 @@ Webpack will change the code
 export class App {
 }
 ```
-this is assuming you have coresponding files next to the component. You may overwrite the selector at anytime by providing one. If the selector and the component file name does not match then the coresponding css/template file with the selector will be injected.
+this is assuming you have corresponding files next to the component. You may overwrite the selector at anytime by providing one. If the selector and the component file name does not match then the corresponding css/template file with the selector will be injected.
 
 
 ## Credits
