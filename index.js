@@ -36,16 +36,16 @@ var path = require('path');
 
 
 // using: regex, capture groups, and capture group variables.
-const componentRegex = /@(Component|Directive)\({([\s\S]*?)}\)$/gm;
-const checkComponentRegex = /(@Component\({[\s\S]*?}\))$/gm;
+var componentRegex = /@(Component|Directive)\({([\s\S]*?)}\)$/gm;
+var checkComponentRegex = /(@Component\({[\s\S]*?}\))$/gm;
 // TODO(gdi2290): become a regexp master to fix this
-const componentClassRegex = /@(Component)\({([\s\S]*?)}\)\s*export\s*class\s*([\s\S]+)\s*(extends|implements|{)$/gm;
-const templateUrlRegex = /templateUrl\s*:(.*)/g;
-const templateRegex = /template\s*:(.*)/g;
-const styleUrlsRegex = /styleUrls\s*:(\s*\[[\s\S]*?\])/g;
-const styleRegex = /styles\s*:(\s*\[[\s\S]*?\])/g;
-const stringRegex = /(['"])((?:[^\\]\\\1|.)*?)\1/g;
-const selectorRegex = /selector\s*:\s*('|")(.*)('|"),?/;
+var componentClassRegex = /@(Component)\({([\s\S]*?)}\)\s*export\s*class\s*([\s\S]+)\s*(extends|implements|{)$/gm;
+var templateUrlRegex = /templateUrl\s*:(.*)/g;
+var templateRegex = /template\s*:(.*)/g;
+var styleUrlsRegex = /styleUrls\s*:(\s*\[[\s\S]*?\])/g;
+var styleRegex = /styles\s*:(\s*\[[\s\S]*?\])/g;
+var stringRegex = /(['"])((?:[^\\]\\\1|.)*?)\1/g;
+var selectorRegex = /selector\s*:\s*('|")(.*)('|"),?/;
 
 function replaceStringsWithRequires(string) {
   return string.replace(stringRegex, function (match, quote, url) {
@@ -65,6 +65,16 @@ function Angular2ConventionsLoader(source, sourcemap) {
   var self = this;
   // Not cacheable during unit tests;
   self.cacheable && self.cacheable();
+  var query = loaderUtils.parseQuery(this.query);
+  var cssExtension = '.css';
+  var htmlExtension = '.html';
+
+  if (query.cssExtension && typeof query.cssExtension === 'string') {
+    cssExtension = query.cssExtension;
+  }
+  if (query.htmlExtension && typeof query.htmlExtension === 'string') {
+    htmlExtension = query.htmlExtension;
+  }
 
 
   // TODO(gdi2290): reuse component regexp
@@ -73,7 +83,6 @@ function Angular2ConventionsLoader(source, sourcemap) {
   source = source.replace(/@Component\(\)/g, '@Component({})');
   // }
   // console.log('', checkComponentRegex, componentRegex, source)
-  // debugger
 
 
   source = source.replace(componentRegex, function (match, decorator, metadata, offset, src) {
@@ -120,34 +129,34 @@ function Angular2ConventionsLoader(source, sourcemap) {
       if (hasSameFileSelector) {
         try {
           debugger
-          _hasHtmlFile = fs.statSync(path.join(self.context, lastFileName + '.css'));
+          _hasHtmlFile = fs.statSync(path.join(self.context, lastFileName + htmlExtension));
         } catch(e) {}
       } else {
         try {
           debugger
-          _hasHtmlFile = fs.statSync(path.join(self.context, './'+ __selector + '.css'));
+          _hasHtmlFile = fs.statSync(path.join(self.context, './'+ __selector + htmlExtension));
         } catch(e) {
           metadata = 'template: "",' + metadata;
         }
       }
       if (_hasHtmlFile) {
-        metadata = 'template: require(".' + lastFileName + '.html"),\n' + metadata;
+        metadata = 'template: require(".' + lastFileName + htmlExtension + '"),\n' + metadata;
       }
     }
     if (!styleRegex.test(metadata)) {
       var _hasCssFile;
       if (hasSameFileSelector) {
         try {
-          _hasCssFile = fs.statSync(path.join(self.context, lastFileName + '.css'));
+          _hasCssFile = fs.statSync(path.join(self.context, lastFileName + cssExtension));
         } catch(e) {}
       } else {
         try {
-          _hasCssFile = fs.statSync(path.join(self.context, './'+ __selector + '.css'));
+          _hasCssFile = fs.statSync(path.join(self.context, './'+ __selector + cssExtension));
         } catch(e) {}
       }
 
       if (_hasCssFile) {
-        metadata = 'styles: [require(".' + lastFileName + '.css")],\n' + metadata;
+        metadata = 'styles: [require(".' + lastFileName + cssExtension + '")],\n' + metadata;
       }
     }
     debugger
