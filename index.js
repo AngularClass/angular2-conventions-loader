@@ -105,7 +105,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
     var fileContext = self.request.split(self.context)
     var lastFileName = fileContext[fileContext.length-1];
     lastFileName = lastFileName.replace(/\.[^/.]+$/g, "");
-    debugger
+
     var __selector;
     if (!/selector\s*:\s*('|")(.*)('|"),?/.test(metadata)) {
 
@@ -119,7 +119,6 @@ function Angular2ConventionsLoader(source, sourcemap) {
       }
     } else if (/selector\s*:\s*('|")(.*)('|")/) {
       var getSelector  = /selector\s*:\s*('|")(.*)('|")/.exec(metadata)
-      debugger
       __selector = getSelector[2];
     }
     var hasSameFileSelector = __selector && lastFileName.toLowerCase().indexOf(__selector.toLowerCase()) !== -1;
@@ -128,12 +127,10 @@ function Angular2ConventionsLoader(source, sourcemap) {
       var _hasHtmlFile;
       if (hasSameFileSelector) {
         try {
-          debugger
           _hasHtmlFile = fs.statSync(path.join(self.context, lastFileName + htmlExtension));
         } catch(e) {}
       } else {
         try {
-          debugger
           _hasHtmlFile = fs.statSync(path.join(self.context, './'+ __selector + htmlExtension));
         } catch(e) {
           metadata = 'template: "",' + metadata;
@@ -159,7 +156,6 @@ function Angular2ConventionsLoader(source, sourcemap) {
         metadata = 'styles: [require(".' + lastFileName + cssExtension + '")],\n' + metadata;
       }
     }
-    debugger
 
 
     return '@' + decorator + '({' + metadata + '})';
