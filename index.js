@@ -128,7 +128,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
     }
     var hasSameFileSelector = __selector && lastFileName.toLowerCase().indexOf(__selector.toLowerCase()) !== -1;
 
-    if (!(templateRegex.test(metadata))) {
+    if (!(/template\s*:(.*)/g.test(metadata))) {
       var _hasHtmlFile;
       if (hasSameFileSelector) {
         try {
@@ -145,7 +145,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
         metadata = 'template: require(".' + lastFileName + htmlExtension + '"),\n' + metadata;
       }
     }
-    if (!(styleRegex.test(metadata))) {
+    if (!(/styles\s*:(\s*\[[\s\S]*?\])/g.test(metadata))) {
       var _hasCssFile;
       if (hasSameFileSelector) {
         try {
