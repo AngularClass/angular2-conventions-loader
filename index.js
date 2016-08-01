@@ -68,12 +68,16 @@ function Angular2ConventionsLoader(source, sourcemap) {
   var query = loaderUtils.parseQuery(this.query);
   var cssExtension = '.css';
   var htmlExtension = '.html';
+  var selectorPrefix = '';
 
   if (query.cssExtension && typeof query.cssExtension === 'string') {
     cssExtension = query.cssExtension;
   }
   if (query.htmlExtension && typeof query.htmlExtension === 'string') {
     htmlExtension = query.htmlExtension;
+  }
+  if (query.selectorPrefix && typeof query.selectorPrefix === 'string') {
+    selectorPrefix = query.selectorPrefix;
   }
 
 
@@ -115,7 +119,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
         var __className = __args[3].split(' ')[0];
         __selector = dashCase(__className);
         __selector = __selector.replace('-component', '');
-        metadata = 'selector: "' + __selector + '",\n' + metadata;
+        metadata = 'selector: "' + selectorPrefix + __selector + '",\n' + metadata;
         __args = null;
       }
     } else if (/selector\s*:\s*('|")(.*)('|")/) {
