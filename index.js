@@ -107,7 +107,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
     lastFileName = lastFileName.replace(/\.[^/.]+$/g, "");
 
     var __selector;
-    if (!/selector\s*:\s*('|")(.*)('|"),?/.test(metadata)) {
+    if (!(/selector\s*:\s*('|")(.*)('|"),?/.test(metadata))) {
 
       // TODO(gdi2290): become a regexp master to fix this
       var __args = /@(Component|Directive)\({([\s\S]*?)}\)\s*export\s*class\s*([\s\S]+)\s*(extends|implements|{)$/m.exec(src.slice(offset));
@@ -123,7 +123,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
     }
     var hasSameFileSelector = __selector && lastFileName.toLowerCase().indexOf(__selector.toLowerCase()) !== -1;
 
-    if (!templateRegex.test(metadata)) {
+    if (!(templateRegex.test(metadata))) {
       var _hasHtmlFile;
       if (hasSameFileSelector) {
         try {
@@ -140,7 +140,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
         metadata = 'template: require(".' + lastFileName + htmlExtension + '"),\n' + metadata;
       }
     }
-    if (!styleRegex.test(metadata)) {
+    if (!(styleRegex.test(metadata))) {
       var _hasCssFile;
       if (hasSameFileSelector) {
         try {
