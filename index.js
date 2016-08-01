@@ -114,6 +114,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
       if (__args && __args[3]) {
         var __className = __args[3].split(' ')[0];
         __selector = dashCase(__className);
+        __selector = __selector.replace('-component', '');
         metadata = 'selector: "' + __selector + '",\n' + metadata;
         __args = null;
       }
