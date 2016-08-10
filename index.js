@@ -47,10 +47,12 @@ var styleRegex = /styles\s*:(\s*\[[\s\S]*?\])/g;
 var stringRegex = /(['"])((?:[^\\]\\\1|.)*?)\1/g;
 var selectorRegex = /selector\s*:\s*('|")(.*)('|"),?/;
 
+var relativePathStart = '.' + path.sep;
+
 function replaceStringsWithRequires(string) {
   return string.replace(stringRegex, function (match, quote, url) {
     if (url.charAt(0) !== '.') {
-      url = './' + url;
+      url = relativePathStart + url;
     }
     return "require('" + url + "')";
   });
@@ -136,7 +138,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
         } catch(e) {}
       } else {
         try {
-          _hasHtmlFile = fs.statSync(path.join(self.context, './'+ __selector + htmlExtension));
+          _hasHtmlFile = fs.statSync(path.join(self.context, relativePathStart + __selector + htmlExtension));
         } catch(e) {
           metadata = 'template: "",' + metadata;
         }
@@ -153,7 +155,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
         } catch(e) {}
       } else {
         try {
-          _hasCssFile = fs.statSync(path.join(self.context, './'+ __selector + cssExtension));
+          _hasCssFile = fs.statSync(path.join(self.context, relativePathStart + __selector + cssExtension));
         } catch(e) {}
       }
 
