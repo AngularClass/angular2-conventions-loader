@@ -144,7 +144,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
         }
       }
       if (_hasHtmlFile) {
-        metadata = 'template: require(".' + lastFileName + htmlExtension + '"),\n' + metadata;
+        metadata = 'template: require("./' + lastFileName + htmlExtension + '"),\n' + metadata;
       }
     }
     if (!(/styles\s*:(\s*\[[\s\S]*?\])/g.test(metadata))) {
@@ -160,7 +160,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
       }
 
       if (_hasCssFile) {
-        metadata = 'styles: [require(".' + lastFileName + cssExtension + '")],\n' + metadata;
+        metadata = 'styles: [require("./' + lastFileName + cssExtension + '")],\n' + metadata;
       }
     }
     // strip moduleId
