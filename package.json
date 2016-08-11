@@ -1,6 +1,6 @@
 {
   "name": "@angularclass/conventions-loader",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Allow default for @Component metadata for Angular 2",
   "main": "index.js",
   "scripts": {
