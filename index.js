@@ -163,7 +163,8 @@ function Angular2ConventionsLoader(source, sourcemap) {
         metadata = 'styles: [require(".' + lastFileName + cssExtension + '")],\n' + metadata;
       }
     }
-
+    // strip moduleId
+    metadata = metadata.replace(/moduleId: module.id,/, '');
 
     return '@' + decorator + '({' + metadata + '})';
   });
