@@ -111,6 +111,9 @@ function Angular2ConventionsLoader(source, sourcemap) {
     var fileContext = self.request.split(self.context)
     var lastFileName = fileContext[fileContext.length-1];
     lastFileName = lastFileName.replace(/\.[^/.]+$/g, "");
+    if(lastFileName.indexOf(relativePathStart) == 0) {
+      lastFileName = lastFileName.substr(relativePathStart.length);
+    }
 
     var __selector;
     if (!(/selector\s*:\s*('|")(.*)('|"),?/.test(metadata))) {
@@ -144,7 +147,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
         }
       }
       if (_hasHtmlFile) {
-        metadata = 'template: require(".' + lastFileName + htmlExtension + '"),\n' + metadata;
+        metadata = 'template: require("' + relativePathStart + lastFileName + htmlExtension + '"),\n' + metadata;
       }
     }
     if (!(/styles\s*:(\s*\[[\s\S]*?\])/g.test(metadata))) {
@@ -160,7 +163,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
       }
 
       if (_hasCssFile) {
-        metadata = 'styles: [require(".' + lastFileName + cssExtension + '")],\n' + metadata;
+        metadata = 'styles: [require("' + relativePathStart + lastFileName + cssExtension + '")],\n' + metadata;
       }
     }
     // strip moduleId
