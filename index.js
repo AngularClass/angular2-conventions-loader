@@ -92,7 +92,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
 
 
   source = source.replace(componentRegex, function (match, decorator, metadata, offset, src) {
-    if (templateUrlRegex.test(metadata)) {
+    if (decorator === 'Component' && templateUrlRegex.test(metadata)) {
       metadata = metadata
         .replace(templateUrlRegex, function (match, url) {
           // replace: templateUrl: './path/to/template.html'
@@ -100,7 +100,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
           return 'template:' + replaceStringsWithRequires(url);
         })
     }
-    if (templateUrlRegex.test(metadata)) {
+    if (decorator === 'Component' && templateUrlRegex.test(metadata)) {
       metadata = metadata
         .replace(styleUrlsRegex, function (match, urls) {
           // replace: stylesUrl: ['./foo.css', "./baz.css", "./index.component.css"]
@@ -108,6 +108,8 @@ function Angular2ConventionsLoader(source, sourcemap) {
           return 'styles:' + replaceStringsWithRequires(urls);
         });
     }
+
+    // get relative file name
     var fileContext = self.request.split(self.context)
     var lastFileName = fileContext[fileContext.length-1];
     lastFileName = lastFileName.replace(/\.[^/.]+$/g, "");
@@ -117,7 +119,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
 
     var __selector;
     if (!(/selector\s*:\s*('|")(.*)('|"),?/.test(metadata))) {
-
+      // grab classname and set selector
       // TODO(gdi2290): become a regexp master to fix this
       var __args = /@(Component|Directive)\({([\s\S]*?)}\)\s*export\s*class\s*([\s\S]+)\s*(extends|implements|{)$/m.exec(src.slice(offset));
       if (__args && __args[3]) {
@@ -128,13 +130,15 @@ function Angular2ConventionsLoader(source, sourcemap) {
         __args = null;
       }
     } else if (/selector\s*:\s*('|")(.*)('|")/) {
+      // grab selector from metadata
       var getSelector  = /selector\s*:\s*('|")(.*)('|")/.exec(metadata)
       __selector = getSelector[2];
     }
     var hasSameFileSelector = __selector && lastFileName.toLowerCase().indexOf(__selector.toLowerCase()) !== -1;
 
-    if (!(/template\s*:(.*)/g.test(metadata))) {
+    if (decorator === 'Component' && !(/template\s*:(.*)/g.test(metadata))) {
       var _hasHtmlFile;
+      // if selector and filename are the same
       if (hasSameFileSelector) {
         try {
           _hasHtmlFile = fs.statSync(path.join(self.context, lastFileName + htmlExtension));
@@ -146,11 +150,13 @@ function Angular2ConventionsLoader(source, sourcemap) {
           metadata = 'template: "",' + metadata;
         }
       }
+      // set file in metadata
       if (_hasHtmlFile) {
         metadata = 'template: require("' + relativePathStart + lastFileName + htmlExtension + '"),\n' + metadata;
       }
     }
-    if (!(/styles\s*:(\s*\[[\s\S]*?\])/g.test(metadata))) {
+    // do the same for styles
+    if (decorator === 'Component' && !(/styles\s*:(\s*\[[\s\S]*?\])/g.test(metadata))) {
       var _hasCssFile;
       if (hasSameFileSelector) {
         try {
@@ -169,6 +175,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
     // strip moduleId
     metadata = metadata.replace(/moduleId: module.id,/, '');
 
+    // return updated metadata
     return '@' + decorator + '({' + metadata + '})';
   });
 
