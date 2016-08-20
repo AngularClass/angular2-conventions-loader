@@ -124,7 +124,8 @@ function Angular2ConventionsLoader(source, sourcemap) {
       var __args = /@(Component|Directive)\({([\s\S]*?)}\)\s*export\s*class\s*([\s\S]+)\s*(extends|implements|{)$/m.exec(src.slice(offset));
       if (__args && __args[3]) {
         var __className = __args[3].split(' ')[0];
-        __selector = dashCase(__className);
+        // if component dash case else [attr]
+        __selector = (decorator === 'Component') ? dashCase(__className) : '[' + __className + ']';
         __selector = __selector.replace('-component', '');
         metadata = 'selector: "' + selectorPrefix + __selector + '",\n' + metadata;
         __args = null;
