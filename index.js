@@ -127,6 +127,8 @@ function Angular2ConventionsLoader(source, sourcemap) {
         // if component dash case else [attr]
         __selector = (decorator === 'Component') ? dashCase(__className) : '[' + __className + ']';
         __selector = __selector.replace('-component', '');
+        __selector = __selector.replace('Directive', '');
+        __selector = __selector.replace('Component', '');
         metadata = 'selector: "' + selectorPrefix + __selector + '",\n' + metadata;
         __args = null;
       }
