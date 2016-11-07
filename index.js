@@ -147,32 +147,24 @@ function Angular2ConventionsLoader(source, sourcemap) {
       var _hasHtmlFile;
       // if selector and filename are the same
       if (hasSameFileSelector) {
-        try {
-          _hasHtmlFile = fs.statSync(path.join(self.context, lastFileName + htmlExtension));
-        } catch(e) {}
+        _hasHtmlFile = isFileExist(path.join(self.context, lastFileName + htmlExtension))
       } else {
-        try {
-          _hasHtmlFile = fs.statSync(path.join(self.context, relativePathStart + __selector + htmlExtension));
-        } catch(e) {
-          metadata = 'template: "",' + metadata;
-        }
+        _hasHtmlFile = isFileExist(path.join(self.context, relativePathStart + __selector + htmlExtension))
       }
       // set file in metadata
       if (_hasHtmlFile) {
         metadata = 'template: require("' + relativePathStart + lastFileName + htmlExtension + '"),\n' + metadata;
+      } else {
+        metadata = 'template: "",' + metadata;
       }
     }
     // do the same for styles
     if (decorator === 'Component' && !(/styles\s*:(\s*\[[\s\S]*?\])/g.test(metadata))) {
       var _hasCssFile;
       if (hasSameFileSelector) {
-        try {
-          _hasCssFile = fs.statSync(path.join(self.context, lastFileName + cssExtension));
-        } catch(e) {}
+        _hasCssFile = isFileExist(path.join(self.context, lastFileName + cssExtension))
       } else {
-        try {
-          _hasCssFile = fs.statSync(path.join(self.context, relativePathStart + __selector + cssExtension));
-        } catch(e) {}
+        _hasCssFile = isFileExist(path.join(self.context, relativePathStart + __selector + cssExtension));
       }
 
       if (_hasCssFile) {
@@ -194,5 +186,13 @@ function Angular2ConventionsLoader(source, sourcemap) {
   }
 };
 Angular2ConventionsLoader.default = Angular2ConventionsLoader;
+
+function isFileExist(path) {
+  try {
+    return !!fs.statSync(path);
+  } catch (e) {
+    return false;
+  }
+}
 
 module.exports = Angular2ConventionsLoader
