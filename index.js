@@ -82,6 +82,10 @@ function Angular2ConventionsLoader(source, sourcemap) {
     selectorPrefix = query.selectorPrefix;
   }
 
+  if (typeof query.canUpdateSelector === 'undefined') {
+    query.canUpdateSelector = true
+  }
+
 
   // TODO(gdi2290): reuse component regexp
   // var defaultComponent = /@Component\(\)$/gm
@@ -100,7 +104,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
           return 'template:' + replaceStringsWithRequires(url);
         })
     }
-    if (decorator === 'Component' && templateUrlRegex.test(metadata)) {
+    if (decorator === 'Component' && styleUrlsRegex.test(metadata)) {
       metadata = metadata
         .replace(styleUrlsRegex, function (match, urls) {
           // replace: stylesUrl: ['./foo.css', "./baz.css", "./index.component.css"]
@@ -111,9 +115,9 @@ function Angular2ConventionsLoader(source, sourcemap) {
 
     // get relative file name
     var fileContext = self.request.split(self.context)
-    var lastFileName = fileContext[fileContext.length-1];
-    lastFileName = lastFileName.replace(/\.[^/.]+$/g, "");
-    if(lastFileName.indexOf(relativePathStart) == 0) {
+    var lastFileName = fileContext[fileContext.length - 1].replace(/\.[^/.]+$/g, '');
+
+    if (lastFileName.indexOf(relativePathStart) === 0) {
       lastFileName = lastFileName.substr(relativePathStart.length);
     }
 
@@ -122,7 +126,7 @@ function Angular2ConventionsLoader(source, sourcemap) {
       // grab classname and set selector
       // TODO(gdi2290): become a regexp master to fix this
       var __args = /@(Component|Directive)\({([\s\S]*?)}\)\s*export\s*class\s*([\s\S]+)\s*(extends|implements|{)$/m.exec(src.slice(offset));
-      if (__args && __args[3]) {
+      if (__args && __args[3] && query.canUpdateSelector) {
         var __className = __args[3].split(' ')[0];
         // if component dash case else [attr]
         __selector = (decorator === 'Component') ? dashCase(__className) : '[' + __className + ']';
